@@ -8,7 +8,7 @@ const TodoApp = () => {
       <div className="uk-container">
         <Navigation />
         <TodoForm />
-        <TodoList />
+        <TodoList  />
       </div>
     </>
   );

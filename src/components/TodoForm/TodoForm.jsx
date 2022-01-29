@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTodosActions } from "../../context/TodosProvider";
 import swal from "sweetalert";
 
-const TodoForm = () => {
-  const [inputValue, setInputValue] = useState("");
+const TodoForm = ({ onUpdate, edite }) => {
+  const [inputValue, setInputValue] = useState(edite ? edite.text : "");
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const { addTodoHandler } = useTodosActions();
 
@@ -13,7 +19,7 @@ const TodoForm = () => {
       swal("Oops", "please enter todo !", "warning");
       return;
     }
-    addTodoHandler(inputValue);
+    onUpdate ? onUpdate(inputValue) : addTodoHandler(inputValue);
     setInputValue("");
   };
 
@@ -30,11 +36,16 @@ const TodoForm = () => {
             name="todo"
             value={inputValue}
             className="uk-input uk-width-1-2"
-            placeholder="add todo ..."
+            placeholder={onUpdate ? "update todo ..." : "add todo ..."}
             onChange={changeHandler}
+            ref={inputRef}
           />
           <button type="submit" className="uk-button uk-button-primary">
-            <span uk-icon="plus-circle"></span>
+            {onUpdate ? (
+              <span uk-icon="refresh"></span>
+            ) : (
+              <span uk-icon="plus-circle"></span>
+            )}
           </button>
         </form>
       </div>

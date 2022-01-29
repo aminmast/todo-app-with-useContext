@@ -22,3 +22,12 @@ ${(props) =>
       : null}
     align-items: center;
 `;
+
+export const TextTodo = styled.p`
+  cursor: pointer;
+  color: #fff;
+  margin: 0 1rem;
+  font-size: 1.5rem;
+  text-decoration: ${(props) => (props.complete ? "line-through" : "none")};
+  font-weight: ${(props) => (props.complete ? "200" : "500")};
+`;

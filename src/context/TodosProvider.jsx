@@ -22,28 +22,30 @@ export const useTodosActions = () => {
   const setTodos = useContext(todosContextDispather);
   const todos = useContext(todosContext);
 
+  // date & time
+  const date = new Date();
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const fullDate = `${date.getFullYear()} / ${
+    months[date.getMonth()]
+  } / ${date.getDate()}`;
+
+  const fullTime = `${date.getHours()} : ${date.getMinutes()} : ${date.getSeconds()}`;
+
   const addTodoHandler = (todo) => {
-    const date = new Date();
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-
-    const fullDate = `${date.getFullYear()} / ${
-      months[date.getMonth()]
-    } / ${date.getDate()}`;
-    const fullTime = `${date.getHours()} : ${date.getMinutes()} : ${date.getSeconds()}`;
-
     const newTodo = {
       id: Date.now(),
       text: todo,
@@ -69,5 +71,21 @@ export const useTodosActions = () => {
     setTodos(updatedTodos);
   };
 
-  return { addTodoHandler, deleteTodoHandler, completeTodoHandler };
+  const updateTodoHandler = (id, value) => {
+    const index = todos.findIndex((todo) => todo.id === id);
+    const selectedTodo = { ...todos[index] };
+    selectedTodo.text = value;
+    selectedTodo.date = fullDate;
+    selectedTodo.time = fullTime + "  update";
+    const updatedTodos = [...todos];
+    updatedTodos[index] = selectedTodo;
+    setTodos(updatedTodos);
+  };
+
+  return {
+    addTodoHandler,
+    deleteTodoHandler,
+    completeTodoHandler,
+    updateTodoHandler,
+  };
 };
