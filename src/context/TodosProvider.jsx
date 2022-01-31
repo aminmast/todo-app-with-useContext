@@ -7,6 +7,16 @@ const todosContextDispather = react.createContext();
 const TodosProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
 
+  // useEffect(() => {
+  //   console.log(todos);
+  //   let savedTodos = localStorage.getItem("todos")
+  //     ? JSON.parse(localStorage.getItem("todos"))
+  //     : [];
+  //   setTodos(savedTodos);
+  //   savedTodos.push(todos);
+  //   localStorage.setItem("todos", JSON.stringify(savedTodos));
+  // }, [todos]);
+
   return (
     <todosContext.Provider value={todos}>
       <todosContextDispather.Provider value={setTodos}>
